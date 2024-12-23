@@ -6,6 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +35,7 @@ public class ProductDTO {
     private String imageUrl;
 
     private LocalDateTime createdAt;
+
     private LocalDateTime updatedAt;
 
     public ProductDTO(Product product) {
@@ -37,6 +44,7 @@ public class ProductDTO {
         this.productName = product.getProductName();
         this.price = product.getPrice();
         this.description = product.getDescription();
+        this.updatedAt=product.getUpdatedAt();
         this.imageUrl = product.getImageUrl();
         this.createdAt = product.getCreatedAt().withNano(0);
         this.updatedAt = product.getUpdatedAt().withNano(0);
@@ -50,8 +58,8 @@ public class ProductDTO {
         this.price = product.getPrice();
         this.quantity = quantity;  // quantity 설정
         this.description = product.getDescription();
-        this.createdAt = product.getCreatedAt();
-        this.updatedAt = product.getUpdatedAt();
+        this.createdAt = product.getCreatedAt().withNano(0);
+        this.updatedAt = product.getUpdatedAt().withNano(0);
     }
 
     public Product toEntity(){
@@ -61,6 +69,8 @@ public class ProductDTO {
                 .category(category)
                 .price(price)
                 .description(description)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .imageUrl(imageUrl)
                 .build();
 
